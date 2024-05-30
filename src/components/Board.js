@@ -2,7 +2,7 @@ import React from 'react';
 import List from './List';
 import { Button, Box, Typography } from '@mui/material';
 
-const Board = ({ board, addList, renameBoard, deleteBoard }) => {
+const Board = ({ board, addList, updateBoard }) => {
   const handleAddList = () => {
     const listName = prompt('Enter list name:');
     if (listName) {
@@ -10,18 +10,16 @@ const Board = ({ board, addList, renameBoard, deleteBoard }) => {
     }
   };
 
-  const handleRenameBoard = () => {
+  const handleUpdateBoard = () => {
     const boardName = prompt('Enter new board name:');
     if (boardName) {
-      renameBoard(board.id, boardName);
+      updateBoard(board.id, boardName);
     }
   };
 
   return (
     <Box className="board">
-      <Typography variant="h4" onClick={handleRenameBoard}>{board.name}</Typography>
-      <Button variant="outlined" color="primary" onClick={handleRenameBoard}>Rename Board</Button>
-      <Button variant="outlined" color="secondary" onClick={() => deleteBoard(board.id)}>Delete Board</Button>
+      <Typography variant="h4" onClick={handleUpdateBoard}>{board.name}</Typography>
       <Box>
         {board.lists.map(list => (
           <List key={list.id} list={list} />

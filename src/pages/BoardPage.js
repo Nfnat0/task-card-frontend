@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addList, renameBoard, deleteBoard, addBoard } from '../redux/actions';
+import { addList, addBoard } from '../redux/actions';
 import { fetchBoards } from '../services/api';
 import Board from '../components/Board';
 import { Box, Typography, CircularProgress } from '@mui/material';
@@ -47,12 +47,9 @@ const BoardPage = () => {
 
   return (
     <Box className="container">
-      <Typography variant="h3">{board.name}</Typography>
       <Board
         board={board}
         addList={(boardId, name) => dispatch(addList(boardId, name))}
-        renameBoard={(id, name) => dispatch(renameBoard(id, name))}
-        deleteBoard={id => dispatch(deleteBoard(id))}
       />
     </Box>
   );
