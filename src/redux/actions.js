@@ -4,8 +4,8 @@ export const addBoard = (name) => ({
   payload: { name }
 });
 
-export const renameBoard = (id, name) => ({
-  type: 'RENAME_BOARD',
+export const updateBoard = (id, name) => ({
+  type: 'UPDATE_BOARD',
   payload: { id, name }
 });
 
@@ -20,8 +20,8 @@ export const addList = (boardId, name) => ({
   payload: { boardId, name }
 });
 
-export const renameList = (boardId, listId, name) => ({
-  type: 'RENAME_LIST',
+export const updateList = (boardId, listId, name) => ({
+  type: 'UPDATE_LIST',
   payload: { boardId, listId, name }
 });
 
@@ -36,8 +36,8 @@ export const addCard = (listId, title) => ({
   payload: { listId, title }
 });
 
-export const renameCard = (listId, cardId, name) => ({
-  type: 'RENAME_CARD',
+export const updateCard = (listId, cardId, name) => ({
+  type: 'UPDATE_CARD',
   payload: { listId, cardId, name }
 });
 
@@ -49,9 +49,4 @@ export const deleteCard = (listId, cardId) => ({
 export const moveCard = (sourceListId, destListId, cardId) => ({
   type: 'MOVE_CARD',
   payload: { sourceListId, destListId, cardId }
-});
-
-export const changeCardCompletionStatus = (listId, cardId, isCompleted) => ({
-  type: 'CHANGE_CARD_COMPLETION_STATUS',
-  payload: { listId, cardId, isCompleted }
 });

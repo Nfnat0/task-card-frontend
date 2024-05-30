@@ -11,7 +11,7 @@ const boardsReducer = (state = initialState.boards, action) => {
         ...state, 
         { id: Date.now(), name: action.payload.name, lists: [] }
       ];
-    case 'RENAME_BOARD':
+    case 'UPDATE_BOARD':
       return state.map(board =>
         board.id === action.payload.id 
           ? { ...board, name: action.payload.name } 
@@ -25,7 +25,7 @@ const boardsReducer = (state = initialState.boards, action) => {
           ? { ...board, lists: [...board.lists, { id: Date.now(), name: action.payload.name, cards: [] }] } 
           : board
       );
-    case 'RENAME_LIST':
+    case 'UPDATE_LIST':
       return state.map(board =>
         board.id === action.payload.boardId 
           ? {
@@ -53,7 +53,7 @@ const boardsReducer = (state = initialState.boards, action) => {
             : list
         )
       }));
-    case 'RENAME_CARD':
+    case 'UPDATE_CARD':
       return state.map(board => ({
         ...board,
         lists: board.lists.map(list =>
@@ -95,22 +95,6 @@ const boardsReducer = (state = initialState.boards, action) => {
         })
       }));
       return updatedBoards;
-    case 'CHANGE_CARD_COMPLETION_STATUS':
-      return state.map(board => ({
-        ...board,
-        lists: board.lists.map(list =>
-          list.id === action.payload.listId 
-            ? {
-              ...list,
-              cards: list.cards.map(card =>
-                card.id === action.payload.cardId 
-                  ? { ...card, isCompleted: action.payload.isCompleted } 
-                  : card
-              )
-            } 
-            : list
-        )
-      }));
     default:
       return state;
   }

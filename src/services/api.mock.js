@@ -14,7 +14,6 @@ let mockData = {
               description: "Description 1",
               label: "",
               dueDate: null,
-              isCompleted: false,
             },
           ],
         },
@@ -44,7 +43,7 @@ export const addBoard = (name) => {
   });
 };
 
-export const renameBoard = (boardId, name) => {
+export const updateBoard = (boardId, name) => {
   return new Promise((resolve, reject) => {
     const board = findBoardById(boardId);
     if (board) {
@@ -83,6 +82,40 @@ export const addList = (boardId, name) => {
   });
 };
 
+export const updateList = (boardId, listId, name) => {
+  return new Promise((resolve, reject) => {
+    const board = findBoardById(boardId);
+    if (board) {
+      const list = findListById(board, listId);
+      if (list) {
+        list.name = name;
+        setTimeout(() => resolve(list), 500);
+      } else {
+        reject("List not found");
+      }
+    } else {
+      reject("Board not found");
+    }
+  });
+};
+
+export const deleteList = (boardId, listId) => {
+  return new Promise((resolve, reject) => {
+    const board = findBoardById(boardId);
+    if (board) {
+      const listIndex = board.lists.findIndex((list) => list.id === listId);
+      if (listIndex !== -1) {
+        const deletedList = board.lists.splice(listIndex, 1);
+        setTimeout(() => resolve(deletedList), 500);
+      } else {
+        reject("List not found");
+      }
+    } else {
+      reject("Board not found");
+    }
+  });
+};
+
 export const addCard = (listId, title) => {
   return new Promise((resolve, reject) => {
     let listFound = false;
@@ -108,18 +141,19 @@ export const addCard = (listId, title) => {
   });
 };
 
-export const updateCard = (cardId, updates) => {
+export const updateCard = (listId, cardId, updates) => {
   return new Promise((resolve, reject) => {
     let cardFound = false;
     mockData.boards.forEach((board) => {
-      board.lists.forEach((list) => {
+      const list = findListById(board, listId);
+      if (list) {
         const card = findCardById(list, cardId);
         if (card) {
           Object.assign(card, updates);
           cardFound = true;
           setTimeout(() => resolve(card), 500);
         }
-      });
+      }
     });
     if (!cardFound) {
       reject("Card not found");

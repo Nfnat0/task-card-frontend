@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate  } from 'react-router-dom';
-import { addBoard, renameBoard, deleteBoard } from '../redux/actions';
+import { addBoard, updateBoard, deleteBoard } from '../redux/actions';
 import { fetchBoards } from '../services/api';
 import { Button, Box, Typography, CircularProgress } from '@mui/material';
 import '../styles/global.css';
@@ -50,7 +50,7 @@ const HomePage = () => {
       {boards.map(board => (
         <Box key={board.id} mb={2} p={2} className="board">
           <Typography variant="h4" onClick={() => handleBoardClick(board.id)}>{board.name}</Typography>
-          <Button variant="outlined" color="primary" onClick={() => dispatch(renameBoard(board.id))}>Rename</Button>
+          <Button variant="outlined" color="primary" onClick={() => dispatch(updateBoard(board.id))}>Edit</Button>
           <Button variant="outlined" color="secondary" onClick={() => dispatch(deleteBoard(board.id))}>Delete</Button>
         </Box>
       ))}
